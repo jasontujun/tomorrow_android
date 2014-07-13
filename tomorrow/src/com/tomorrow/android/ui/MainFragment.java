@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.tomorrow.android.R;
+import com.tomorrow.android.mgr.PredictionMgr;
 
 import java.util.Calendar;
 
@@ -36,7 +37,14 @@ public class MainFragment extends Fragment {
                 MainActivity activity = (MainActivity) getActivity();
                 if (activity == null)
                     return;
-                activity.switchScreen(MainActivity.FRAGMENT_OTHER);
+//                activity.switchScreen(MainActivity.FRAGMENT_OTHER);
+                Calendar calendar = Calendar.getInstance();
+                calendar.add(Calendar.DATE, 1);
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH) + 1;// 月从1开始
+                int day = calendar.get(Calendar.DATE);
+                PredictionMgr.getInstance().getOtherPredictionList(getActivity(),
+                        year, month, day, 0, 20);
             }
         };
         mYearView.setOnClickListener(listener);
@@ -58,7 +66,9 @@ public class MainFragment extends Fragment {
                 MainActivity activity = (MainActivity) getActivity();
                 if (activity == null)
                     return;
-                activity.showMyPredictionFragment();
+//                activity.showMyPredictionFragment();
+                PredictionMgr.getInstance().getMyPredictionList(getActivity(),
+                        0, 20);
             }
         });
         myCollectionView.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +77,9 @@ public class MainFragment extends Fragment {
                 MainActivity activity = (MainActivity) getActivity();
                 if (activity == null)
                     return;
-                activity.showMyCollectionFragment();
+//                activity.showMyCollectionFragment();
+//                PredictionMgr.getInstance().getPredictionDetail(getActivity(), "40280c81471f75f701471f77df3a0001");
+                PredictionMgr.getInstance().getPredictionReply(getActivity(), "40280c81471f75f701471f77df3a0001");
             }
         });
 

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--主机地址-->
+    <string name="host">http://192.168.1.101:8080/Tomorrow/</string>
+
+    <!--登陆接口-->
+    <string name="login">login.jsp</string>
+    <!--注册接口-->
+    <string name="register">register.jsp</string>
+
+    <!--发布预测接口-->
+    <string name="publish_prediction">publishPrediction.jsp</string>
+    <!--回复预测接口-->
+    <string name="reply_prediction">replyPrediction.jsp</string>
+    <!--验证预测接口-->
+    <string name="check_prediction">checkPrediction.jsp</string>
+
+    <!--获取我的预测的列表接口-->
+    <string name="get_my_prediction">getMyPrediction.jsp</string>
+    <!--获取我的回复过的预测列表接口-->
+    <string name="get_collected_prediction">getCollectedPrediction.jsp</string>
+    <!--获取别人预测的列表接口-->
+    <string name="get_other_prediction">getOtherPrediction.jsp</string>
+
+    <!--获取预测回复和结果接口-->
+    <string name="get_prediction_reply">getPredictionReply.jsp</string>
+    <!--获取预测详情接口-->
+    <string name="get_prediction_detail">getPredictionDetail.jsp</string>
+
+</resources>

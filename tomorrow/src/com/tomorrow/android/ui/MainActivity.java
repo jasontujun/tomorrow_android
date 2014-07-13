@@ -5,11 +5,11 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v4.app.*;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 import android.widget.Toast;
 import com.tomorrow.android.R;
+import com.tomorrow.android.mgr.SystemMgr;
 import com.tomorrow.android.receiver.NetworkReceiver;
 
 import java.util.ArrayList;
@@ -31,9 +31,10 @@ public class MainActivity extends FragmentActivity {
     private ViewPager mDragLayer;// 可拖动图层
     private DragLayerAdapter mDragAdapter;// 可拖动图层的Adapter
     private int mIndex;// 当前显示的Fragment的索引
-    public static final int FRAGMENT_OTHER = 0;
-    public static final int FRAGMENT_MAIN = 1;
-    public static final int FRAGMENT_ME = 2;
+    public static final int FRAGMENT_LOGIN = 0;
+    public static final int FRAGMENT_OTHER = 1;
+    public static final int FRAGMENT_MAIN = 2;
+    public static final int FRAGMENT_ME = 3;
 
     private BroadcastReceiver mNetworkReceiver;
 
@@ -41,13 +42,12 @@ public class MainActivity extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // 初始化系统相关组件
-//        SystemMgr.getInstance().initEngine(getApplicationContext());
-//        SystemMgr.getInstance().initSystem(getApplicationContext());
+        // 初始化系统公共模块
+        SystemMgr.getInstance().init(this);
 
         // ui
 //        mDragLayer = new ViewPager(this);
-//        mDragLayer.setId(1);// TIP:手动创建的ViewPager必须设置id
+//        mDragLayer.setPredictionId(1);// TIP:手动创建的ViewPager必须设置id
 //        setContentView(mDragLayer);
         setContentView(R.layout.activity_main);
         mDragLayer = (ViewPager) findViewById(R.id.drag_layer);
@@ -60,8 +60,8 @@ public class MainActivity extends FragmentActivity {
                 mIndex = position;
             }
         });
-        mIndex = FRAGMENT_MAIN;
-        mDragLayer.setCurrentItem(FRAGMENT_MAIN);
+        mIndex = FRAGMENT_LOGIN;
+        mDragLayer.setCurrentItem(mIndex);
     }
 
     @Override
@@ -134,17 +134,17 @@ public class MainActivity extends FragmentActivity {
 
     public void showPublishFragment() {
         mDragAdapter.addFragment(new PublishFragment());
-        mDragLayer.setCurrentItem(2, true);
+        mDragLayer.setCurrentItem(3, true);
     }
 
     public void showMyPredictionFragment() {
         mDragAdapter.addFragment(new MyPredictionFragment());
-        mDragLayer.setCurrentItem(2, true);
+        mDragLayer.setCurrentItem(3, true);
     }
 
     public void showMyCollectionFragment() {
         mDragAdapter.addFragment(new MyCollectionFragment());
-        mDragLayer.setCurrentItem(2, true);
+        mDragLayer.setCurrentItem(3, true);
     }
 
     /**
@@ -157,6 +157,7 @@ public class MainActivity extends FragmentActivity {
         public DragLayerAdapter(FragmentManager fm) {
             super(fm);
             fragments = new ArrayList<Fragment>();
+            fragments.add(new LoginFragment());
             fragments.add(new OtherPredictionFragment());
             fragments.add(new MainFragment());
         }
@@ -181,17 +182,17 @@ public class MainActivity extends FragmentActivity {
                 return;
 
             // 如果已有三屏，则替换
-            if (fragments.size() == 3) {
+            if (fragments.size() == 4) {
                 // 如果添加的屏幕和当前的是一样的，则什么都不做
-                Fragment oldFragment = fragments.get(2);
-                if (fragment.getClass() == oldFragment.getClass())
-                    return;
-
-                // 如果不一样，则替换第三屏
-                List<Fragment> copyFragment = new ArrayList<Fragment>(fragments);
-                copyFragment.remove(2);
-                copyFragment.add(fragment);
-                fragments = copyFragment;
+//                Fragment oldFragment = fragments.get(2);
+//                if (fragment.getClass() == oldFragment.getClass())
+//                    return;
+//
+//                // 如果不一样，则替换第三屏
+//                List<Fragment> copyFragment = new ArrayList<Fragment>(fragments);
+//                copyFragment.remove(2);
+//                copyFragment.add(fragment);
+//                fragments = copyFragment;
             } else {
                 fragments.add(fragment);
             }
