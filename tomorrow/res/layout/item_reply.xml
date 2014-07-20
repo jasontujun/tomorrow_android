@@ -1,15 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:padding="10dp"
               android:orientation="vertical"
-        android:background="@color/light_black">
+              android:background="@color/light_black">
+
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <!--回复者-->
+        <TextView
+                android:id="@+id/sender_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="JACK"
+                android:textSize="18sp"
+                android:textColor="@color/gray"/>
+        <!--时间-->
+        <TextView
+                android:id="@+id/time_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="bottom"
+                android:text="5分钟前"
+                android:textSize="13sp"
+                android:textColor="@color/dark_gray"/>
+    </LinearLayout>
+
+    <!--内容-->
     <TextView
             android:id="@+id/title_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:text="DLKJLJLJLJ dslkjsldjflDLKJLJLJLJ dslkjsldjflDLKJLJLJLJ dslkjsldjfl"
             android:textSize="18sp"
             android:textColor="@color/light_gray"/>
@@ -18,7 +46,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp">
-        <!--可信度-->
+        <!--可能性-->
         <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -27,14 +55,14 @@
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="可信度: "
+                    android:text="可能性: "
                     android:textSize="15sp"
                     android:textColor="@color/dark_gray"/>
             <TextView
-                    android:id="@+id/credit_view"
+                    android:id="@+id/possibility_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="50%"
+                    android:text="5"
                     android:textSize="15sp"
                     android:textColor="@color/dark_gray"/>
         </LinearLayout>
@@ -43,10 +71,9 @@
                 android:id="@+id/reply_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:padding="5dp"
-                android:text="5"
+                android:text="\@Ta"
                 android:textSize="15sp"
                 android:textColor="@color/light_gray"
                 android:drawableLeft="@drawable/btn_reply"

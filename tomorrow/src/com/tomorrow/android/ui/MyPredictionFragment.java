@@ -9,6 +9,10 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import com.tomorrow.android.R;
+import com.tomorrow.android.data.cache.MyPredictionSource;
+import com.tomorrow.android.data.cache.SourceName;
+import com.tomorrow.android.ui.adpter.PredictionAdapter;
+import com.xengine.android.data.cache.DefaultDataRepo;
 
 /**
  * Created by jasontujun on 14-7-5.
@@ -26,13 +30,10 @@ public class MyPredictionFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_prediction, container, false);
         mListView = (ListView) rootView.findViewById(R.id.content_list);
 
-        mAdapter = new ArrayAdapter<String>(getActivity(), R.layout.item_prediction,
-                R.id.text_view, new String[]{"我的预测1 .....", "我的预测2 .....", "我的预测3 .....",
-                "我的预测4 .....", "我的预测5 .....", "我的预测6 .....", "我的预测7 .....",
-                "我的预测4 .....", "我的预测5 .....", "我的预测6 .....", "我的预测7 .....",
-                "我的预测4 .....", "我的预测5 .....", "我的预测6 .....", "我的预测7 .....",
-                "我的预测4 .....", "我的预测5 .....", "我的预测6 .....", "我的预测7 .....",
-                "我的预测4 .....", "我的预测5 .....", "我的预测6 .....", "我的预测7 ....."});
+
+        MyPredictionSource source = (MyPredictionSource) DefaultDataRepo.getInstance().
+                getSource(SourceName.MY_PREDICTION);
+        mAdapter = new PredictionAdapter(getActivity(), source);
         mListView.setAdapter(mAdapter);
         return rootView;
     }

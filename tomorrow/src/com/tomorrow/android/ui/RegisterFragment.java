@@ -23,22 +23,24 @@ import com.xengine.android.data.cache.DefaultDataRepo;
 /**
  * Created by jasontujun on 14-7-12.
  */
-public class LoginFragment extends Fragment {
+public class RegisterFragment extends Fragment {
 
     private EditText usernameInput;
     private EditText passwordInput;
-    private Button loginBtn;
+    private EditText nicknameInput;
+    private Button registerBtn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_login, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_register, container, false);
         usernameInput = (EditText) rootView.findViewById(R.id.username_input);
         passwordInput = (EditText) rootView.findViewById(R.id.password_input);
-        loginBtn = (Button) rootView.findViewById(R.id.login_btn);
+        nicknameInput = (EditText) rootView.findViewById(R.id.nickname_input);
+        registerBtn = (Button) rootView.findViewById(R.id.register_btn);
 
-        loginBtn.setOnClickListener(new View.OnClickListener() {
+        registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final String username = usernameInput.getText() == null ?
@@ -55,10 +57,16 @@ public class LoginFragment extends Fragment {
                     return;
                 }
 
+                final String nickname = nicknameInput.getText() == null ?
+                        null : nicknameInput.getText().toString();
+                if (TextUtils.isEmpty(nickname)) {
+                    Toast.makeText(getActivity(), R.string.register_nickname_null, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 new AsyncTask<Void, Void, Integer>() {
 
                     private Dialog waitingDialog;
-                    private User user;
 
                     @Override
                     protected void onPreExecute() {
@@ -73,8 +81,7 @@ public class LoginFragment extends Fragment {
                     protected Integer doInBackground(Void... voids) {
                         if (getActivity() == null)
                             return -1;
-                        user = new User();
-                        return SessionApi.login(getActivity(), username, password, user);
+                        return SessionApi.register(getActivity(), username, password, nickname);
                     }
 
                     @Override
@@ -83,11 +90,6 @@ public class LoginFragment extends Fragment {
                             return;
 
                         if (StatusCode.success(result)) {
-                            // 记住账号密码
-                            GlobalDataSource globalDataSource = (GlobalDataSource) DefaultDataRepo
-                                    .getInstance().getSource(SourceName.GLOBAL_DATA);
-                            globalDataSource.rememberUsernamePassword(username, password);// 记住帐号密码
-                            globalDataSource.setCurrentUser(user);// 保存当前登录的User数据
 
                             Toast.makeText(getActivity(), R.string.login_success, Toast.LENGTH_SHORT).show();
                             MainActivity activity = (MainActivity) getActivity();
@@ -105,19 +107,10 @@ public class LoginFragment extends Fragment {
                         if (waitingDialog != null)
                             waitingDialog.dismiss();
                     }
+
                 }.execute();
             }
         });
-
-
-        GlobalDataSource globalDataSource = (GlobalDataSource) DefaultDataRepo
-                .getInstance().getSource(SourceName.GLOBAL_DATA);
-        String username = globalDataSource.getRememberUserName();
-        String password = globalDataSource.getRememberPassword();
-        if (!TextUtils.isEmpty(username))
-            usernameInput.setText(username);
-        if (!TextUtils.isEmpty(password))
-            passwordInput.setText(password);
 
         return rootView;
     }

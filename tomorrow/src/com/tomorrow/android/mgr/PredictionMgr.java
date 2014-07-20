@@ -1,5 +1,6 @@
 package com.tomorrow.android.mgr;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
@@ -12,6 +13,7 @@ import com.tomorrow.android.data.cache.OtherPredictionSource;
 import com.tomorrow.android.data.cache.SourceName;
 import com.tomorrow.android.data.model.Prediction;
 import com.tomorrow.android.data.model.User;
+import com.tomorrow.android.utils.DialogUtil;
 import com.xengine.android.data.cache.DefaultDataRepo;
 import com.xengine.android.utils.XLog;
 
@@ -22,6 +24,10 @@ import java.util.List;
  * Created by jasontujun on 14-7-13.
  */
 public class PredictionMgr {
+
+    public interface Listener {
+        void onFinish(boolean success, Prediction prediction);
+    }
 
     private static class SingletonHolder {
         final static PredictionMgr INSTANCE = new PredictionMgr();
@@ -45,12 +51,19 @@ public class PredictionMgr {
         final String userId = user == null ? null : user.getUserId();
 
         new AsyncTask<Void, Void, Integer>() {
+
+            private Dialog waitingDialog;
             List<Prediction> predictions;
 
             @Override
+            protected void onPreExecute() {
+                waitingDialog = DialogUtil.createWaitingDialog(context,
+                        R.string.dialog_waiting, null);
+                waitingDialog.show();
+            }
+
+            @Override
             protected Integer doInBackground(Void... voids) {
-                if (context == null)
-                    return -1;
                 predictions = new ArrayList<Prediction>();
                 return SessionApi.getOtherPrediction(context, userId, offset, size,
                         year, month, day, predictions);
@@ -67,6 +80,15 @@ public class PredictionMgr {
                 } else {
                     Toast.makeText(context, StatusCode.toErrorString(result), Toast.LENGTH_SHORT).show();
                 }
+
+                if (waitingDialog != null)
+                    waitingDialog.dismiss();
+            }
+
+            @Override
+            protected void onCancelled() {
+                if (waitingDialog != null)
+                    waitingDialog.dismiss();
             }
         }.execute();
         return true;
@@ -75,7 +97,7 @@ public class PredictionMgr {
 
 
     public boolean getMyPredictionList(final Context context,
-                                          final int offset, final int size) {
+                                       final int offset, final int size) {
         if (context == null)
             return false;
 
@@ -85,7 +107,16 @@ public class PredictionMgr {
         final String userId = user == null ? null : user.getUserId();
 
         new AsyncTask<Void, Void, Integer>() {
+
+            private Dialog waitingDialog;
             List<Prediction> predictions;
+
+            @Override
+            protected void onPreExecute() {
+                waitingDialog = DialogUtil.createWaitingDialog(context,
+                        R.string.dialog_waiting, null);
+                waitingDialog.show();
+            }
 
             @Override
             protected Integer doInBackground(Void... voids) {
@@ -105,6 +136,15 @@ public class PredictionMgr {
                 } else {
                     Toast.makeText(context, StatusCode.toErrorString(result), Toast.LENGTH_SHORT).show();
                 }
+
+                if (waitingDialog != null)
+                    waitingDialog.dismiss();
+            }
+
+            @Override
+            protected void onCancelled() {
+                if (waitingDialog != null)
+                    waitingDialog.dismiss();
             }
         }.execute();
         return true;
@@ -113,7 +153,8 @@ public class PredictionMgr {
 
 
     public boolean getPredictionReply(final Context context,
-                                       final String predictionId) {
+                                      final String predictionId,
+                                      final Listener listener) {
         if (context == null)
             return false;
 
@@ -125,7 +166,15 @@ public class PredictionMgr {
         final String userId = user.getUserId();
 
         new AsyncTask<Void, Void, Integer>() {
+            private Dialog waitingDialog;
             Prediction prediction;
+
+            @Override
+            protected void onPreExecute() {
+                waitingDialog = DialogUtil.createWaitingDialog(context,
+                        R.string.dialog_waiting, null);
+                waitingDialog.show();
+            }
 
             @Override
             protected Integer doInBackground(Void... voids) {
@@ -140,6 +189,18 @@ public class PredictionMgr {
                 } else {
                     Toast.makeText(context, StatusCode.toErrorString(result), Toast.LENGTH_SHORT).show();
                 }
+
+                if (listener != null)
+                    listener.onFinish(StatusCode.success(result), prediction);
+
+                if (waitingDialog != null)
+                    waitingDialog.dismiss();
+            }
+
+            @Override
+            protected void onCancelled() {
+                if (waitingDialog != null)
+                    waitingDialog.dismiss();
             }
         }.execute();
         return true;
@@ -147,7 +208,8 @@ public class PredictionMgr {
 
 
     public boolean getPredictionDetail(final Context context,
-                                       final String predictionId) {
+                                       final String predictionId,
+                                       final Listener listener) {
         if (context == null)
             return false;
 
@@ -159,7 +221,15 @@ public class PredictionMgr {
         final String userId = user.getUserId();
 
         new AsyncTask<Void, Void, Integer>() {
+            private Dialog waitingDialog;
             Prediction prediction;
+
+            @Override
+            protected void onPreExecute() {
+                waitingDialog = DialogUtil.createWaitingDialog(context,
+                        R.string.dialog_waiting, null);
+                waitingDialog.show();
+            }
 
             @Override
             protected Integer doInBackground(Void... voids) {
@@ -174,6 +244,18 @@ public class PredictionMgr {
                 } else {
                     Toast.makeText(context, StatusCode.toErrorString(result), Toast.LENGTH_SHORT).show();
                 }
+
+                if (listener != null)
+                    listener.onFinish(StatusCode.success(result), prediction);
+
+                if (waitingDialog != null)
+                    waitingDialog.dismiss();
+            }
+
+            @Override
+            protected void onCancelled() {
+                if (waitingDialog != null)
+                    waitingDialog.dismiss();
             }
         }.execute();
         return true;

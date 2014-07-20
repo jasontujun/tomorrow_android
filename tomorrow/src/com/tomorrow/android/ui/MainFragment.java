@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.tomorrow.android.R;
 import com.tomorrow.android.mgr.PredictionMgr;
+import com.tomorrow.android.mgr.SystemMgr;
 
 import java.util.Calendar;
 
@@ -67,8 +68,6 @@ public class MainFragment extends Fragment {
                 if (activity == null)
                     return;
 //                activity.showMyPredictionFragment();
-                PredictionMgr.getInstance().getMyPredictionList(getActivity(),
-                        0, 20);
             }
         });
         myCollectionView.setOnClickListener(new View.OnClickListener() {
@@ -78,28 +77,15 @@ public class MainFragment extends Fragment {
                 if (activity == null)
                     return;
 //                activity.showMyCollectionFragment();
-//                PredictionMgr.getInstance().getPredictionDetail(getActivity(), "40280c81471f75f701471f77df3a0001");
-                PredictionMgr.getInstance().getPredictionReply(getActivity(), "40280c81471f75f701471f77df3a0001");
             }
         });
 
         // 初始化日期
-        initDate();
+        int[] date = SystemMgr.getInstance().getTomorrow();
+        mYearView.setText(("" + date[0]).substring(2));
+        mMonthView.setText("" + date[1]);
+        mDayView.setText("" + date[2]);
 
         return rootView;
-    }
-
-    /**
-     * 初始化日期(明天)
-     */
-    private void initDate() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, 1);
-        String year = "" + calendar.get(Calendar.YEAR);
-        String month = "" + (calendar.get(Calendar.MONTH) + 1);// 月从0开始计算
-        String day = "" + calendar.get(Calendar.DATE);
-        mYearView.setText(year.substring(2));
-        mMonthView.setText(month);
-        mDayView.setText(day);
     }
 }

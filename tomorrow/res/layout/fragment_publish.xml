@@ -16,7 +16,7 @@
                 android:hint="what?"
                 android:textColorHint="@color/gray"
                 android:textSize="18sp"
-                android:textColor="@color/white"
+                android:textColor="@color/light_gray"
                 android:padding="6dp"
                 android:background="@color/dark_gray"/>
         <!--how-->
@@ -28,7 +28,7 @@
                 android:hint="how?"
                 android:textColorHint="@color/gray"
                 android:textSize="18sp"
-                android:textColor="@color/white"
+                android:textColor="@color/light_gray"
                 android:padding="6dp"
                 android:background="@color/dark_gray"/>
         <!--where-->
@@ -40,7 +40,7 @@
                 android:hint="where?"
                 android:textColorHint="@color/gray"
                 android:textSize="18sp"
-                android:textColor="@color/white"
+                android:textColor="@color/light_gray"
                 android:padding="6dp"
                 android:background="@color/dark_gray"/>
         <!--when-->
@@ -89,7 +89,7 @@
                 android:hint="reason?"
                 android:textColorHint="@color/gray"
                 android:textSize="18sp"
-                android:textColor="@color/white"
+                android:textColor="@color/light_gray"
                 android:padding="6dp"
                 android:background="@color/dark_gray"/>
         <!--credit-->
@@ -104,7 +104,7 @@
                     android:layout_height="wrap_content"
                     android:text="当前可信度："
                     android:textSize="18sp"
-                    android:textColor="@color/white"/>
+                    android:textColor="@color/light_gray"/>
             <TextView
                     android:id="@+id/credit_view"
                     android:layout_width="match_parent"
@@ -123,6 +123,6 @@
             android:layout_marginBottom="20dp"
             android:text="发布"
             android:textSize="18sp"
-            android:textColor="@color/white"
+            android:textColor="@color/light_gray"
             android:background="@color/dark_gray"/>
 </RelativeLayout>

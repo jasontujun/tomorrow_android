@@ -157,6 +157,7 @@ public class MainActivity extends FragmentActivity {
         public DragLayerAdapter(FragmentManager fm) {
             super(fm);
             fragments = new ArrayList<Fragment>();
+            fragments.add(new RegisterFragment());
             fragments.add(new LoginFragment());
             fragments.add(new OtherPredictionFragment());
             fragments.add(new MainFragment());

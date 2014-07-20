@@ -9,6 +9,8 @@ import com.xengine.android.data.cache.XDataRepository;
 import com.xengine.android.session.http.XHttp;
 import com.xengine.android.session.http.apache.XApacheHttpClient;
 
+import java.util.Calendar;
+
 /**
  * 系统公共模块管理器
  * Created by jasontujun on 14-7-12.
@@ -48,5 +50,19 @@ public class SystemMgr {
 
     public XHttp getHttpClient() {
         return mHttp;
+    }
+
+
+    /**
+     * 获取明天的年月日
+     */
+    public int[] getTomorrow() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, 1);
+        int[] result = new int[3];
+        result[0] = calendar.get(Calendar.YEAR);
+        result[1] = calendar.get(Calendar.MONTH) + 1;
+        result[2] = calendar.get(Calendar.DATE);
+        return result;
     }
 }
