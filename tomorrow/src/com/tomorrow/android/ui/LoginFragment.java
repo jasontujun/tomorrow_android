@@ -91,7 +91,7 @@ public class LoginFragment extends Fragment {
 
                             Toast.makeText(getActivity(), R.string.login_success, Toast.LENGTH_SHORT).show();
                             MainActivity activity = (MainActivity) getActivity();
-                            activity.switchScreen(MainActivity.FRAGMENT_MAIN);
+//                            activity.switchScreen(MainActivity.FRAGMENT_MAIN);
                         } else {
                             Toast.makeText(getActivity(), StatusCode.toErrorString(result), Toast.LENGTH_SHORT).show();
                         }

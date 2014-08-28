@@ -33,7 +33,7 @@ public class MyPredictionFragment extends Fragment {
 
         MyPredictionSource source = (MyPredictionSource) DefaultDataRepo.getInstance().
                 getSource(SourceName.MY_PREDICTION);
-        mAdapter = new PredictionAdapter(getActivity(), source);
+        mAdapter = new PredictionAdapter(getActivity(), source, null);
         mListView.setAdapter(mAdapter);
         return rootView;
     }

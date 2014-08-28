@@ -58,7 +58,7 @@ public class MainFragment extends Fragment {
                 MainActivity activity = (MainActivity) getActivity();
                 if (activity == null)
                     return;
-                activity.showPublishFragment();
+//                activity.showPublishFragment();
             }
         });
         myPredictionView.setOnClickListener(new View.OnClickListener() {

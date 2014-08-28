@@ -31,10 +31,8 @@ public class MainActivity extends FragmentActivity {
     private ViewPager mDragLayer;// 可拖动图层
     private DragLayerAdapter mDragAdapter;// 可拖动图层的Adapter
     private int mIndex;// 当前显示的Fragment的索引
-    public static final int FRAGMENT_LOGIN = 0;
-    public static final int FRAGMENT_OTHER = 1;
-    public static final int FRAGMENT_MAIN = 2;
-    public static final int FRAGMENT_ME = 3;
+    public static final int FRAGMENT_HISTORY = 0;
+    public static final int FRAGMENT_TOMORROW = 1;
 
     private BroadcastReceiver mNetworkReceiver;
 
@@ -60,7 +58,7 @@ public class MainActivity extends FragmentActivity {
                 mIndex = position;
             }
         });
-        mIndex = FRAGMENT_LOGIN;
+        mIndex = FRAGMENT_HISTORY;
         mDragLayer.setCurrentItem(mIndex);
     }
 
@@ -91,14 +89,6 @@ public class MainActivity extends FragmentActivity {
                 if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
                     getSupportFragmentManager().popBackStack();
                     return false;
-                } else if (mIndex > FRAGMENT_MAIN) {
-                    // 主界面右边，向左边滑动
-                    mDragLayer.setCurrentItem(mIndex - 1);
-                    return true;
-                }  else if (mIndex < FRAGMENT_MAIN) {
-                    // 主界面右边，向左边滑动
-                    mDragLayer.setCurrentItem(mIndex + 1);
-                    return true;
                 } else {
                     // 在主界面，点击2次退出
                     long currentTime = System.currentTimeMillis();
@@ -112,39 +102,9 @@ public class MainActivity extends FragmentActivity {
                     return true;
                 }
             case KeyEvent.KEYCODE_MENU:
-//                if (mIndex != FRAGMENT_MAIN)
-//                    mDragLayer.setCurrentItem(FRAGMENT_MAIN, true);
-                return true;
+                break;
         }
         return false;
-    }
-
-    /**
-     * 切换屏幕
-     */
-    public boolean switchScreen(int index) {
-        if (index == mIndex)
-            return false;
-        if (index < 0 || index >= mDragAdapter.getCount())
-            return false;
-
-        mDragLayer.setCurrentItem(index, true);
-        return true;
-    }
-
-    public void showPublishFragment() {
-        mDragAdapter.addFragment(new PublishFragment());
-        mDragLayer.setCurrentItem(3, true);
-    }
-
-    public void showMyPredictionFragment() {
-        mDragAdapter.addFragment(new MyPredictionFragment());
-        mDragLayer.setCurrentItem(3, true);
-    }
-
-    public void showMyCollectionFragment() {
-        mDragAdapter.addFragment(new MyCollectionFragment());
-        mDragLayer.setCurrentItem(3, true);
     }
 
     /**
@@ -157,10 +117,8 @@ public class MainActivity extends FragmentActivity {
         public DragLayerAdapter(FragmentManager fm) {
             super(fm);
             fragments = new ArrayList<Fragment>();
-            fragments.add(new RegisterFragment());
-            fragments.add(new LoginFragment());
-            fragments.add(new OtherPredictionFragment());
-            fragments.add(new MainFragment());
+            fragments.add(new HistoryFragment());
+            fragments.add(new FutureFragment());
         }
 
         @Override
@@ -176,28 +134,6 @@ public class MainActivity extends FragmentActivity {
         @Override
         public float getPageWidth(int position) {
             return 1.0f;
-        }
-
-        public void addFragment(Fragment fragment) {
-            if (fragment == null)
-                return;
-
-            // 如果已有三屏，则替换
-            if (fragments.size() == 4) {
-                // 如果添加的屏幕和当前的是一样的，则什么都不做
-//                Fragment oldFragment = fragments.get(2);
-//                if (fragment.getClass() == oldFragment.getClass())
-//                    return;
-//
-//                // 如果不一样，则替换第三屏
-//                List<Fragment> copyFragment = new ArrayList<Fragment>(fragments);
-//                copyFragment.remove(2);
-//                copyFragment.add(fragment);
-//                fragments = copyFragment;
-            } else {
-                fragments.add(fragment);
-            }
-            notifyDataSetChanged();
         }
     }
 }

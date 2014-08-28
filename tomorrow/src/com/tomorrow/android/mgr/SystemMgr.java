@@ -1,9 +1,7 @@
 package com.tomorrow.android.mgr;
 
 import android.content.Context;
-import com.tomorrow.android.data.cache.GlobalDataSource;
-import com.tomorrow.android.data.cache.MyPredictionSource;
-import com.tomorrow.android.data.cache.OtherPredictionSource;
+import com.tomorrow.android.data.cache.*;
 import com.xengine.android.data.cache.DefaultDataRepo;
 import com.xengine.android.data.cache.XDataRepository;
 import com.xengine.android.session.http.XHttp;
@@ -46,6 +44,8 @@ public class SystemMgr {
         repo.registerDataSource(new GlobalDataSource(context));
         repo.registerDataSource(new MyPredictionSource());
         repo.registerDataSource(new OtherPredictionSource());
+        repo.registerDataSource(new HistoryPredictionSource());
+        repo.registerDataSource(new FuturePredictionSource());
     }
 
     public XHttp getHttpClient() {

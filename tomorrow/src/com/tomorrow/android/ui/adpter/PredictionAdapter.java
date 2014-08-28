@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
@@ -26,11 +27,14 @@ public class PredictionAdapter extends BaseAdapter
     private Context mContext;
     private List<Prediction> mItems;
     private XAdapterDataSource<Prediction> mSource;
+    private SwipeRefreshLayout mSwipeLayout;
 
-    public PredictionAdapter(Context context, XAdapterDataSource<Prediction> source) {
+    public PredictionAdapter(Context context, XAdapterDataSource<Prediction> source,
+                             SwipeRefreshLayout swipeLayout) {
         mContext = context;
         mItems = new ArrayList<Prediction>();
         mSource = source;
+        mSwipeLayout = swipeLayout;
     }
 
     @Override
@@ -96,10 +100,14 @@ public class PredictionAdapter extends BaseAdapter
             switch (msg.what) {
                 case 0:
                     notifyDataSetChanged();
+                    if (mSwipeLayout != null)
+                        mSwipeLayout.setRefreshing(false);
                     break;
                 case 1:
                     mItems = mSource.copyAll();
                     notifyDataSetChanged();
+                    if (mSwipeLayout != null)
+                        mSwipeLayout.setRefreshing(false);
                     break;
             }
         }
