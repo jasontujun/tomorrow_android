@@ -14,6 +14,7 @@ import com.tomorrow.android.ui.adpter.PredictionDetailAdapter;
 import com.xengine.android.data.cache.DefaultDataRepo;
 
 /**
+ * 预测的详情页。
  * Created by jasontujun on 14-7-20.
  */
 public class PredictionActivity extends Activity {

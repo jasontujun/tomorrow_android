@@ -1,12 +1,19 @@
 package com.tomorrow.android.ui;
 
+import android.app.*;
+import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v4.app.*;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.widget.Toast;
 import com.tomorrow.android.R;
 import com.tomorrow.android.mgr.SystemMgr;
@@ -23,13 +30,19 @@ import java.util.List;
  * Time: 上午10:57
  * To change this template use File | Settings | File Templates.
  */
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
 
+    public static final String TAG = MainActivity.class.getSimpleName();
     private static final int PRESS_BACK_INTERVAL = 1500; // back按键间隔，单位：毫秒
     private long lastBackTime;// 上一次back键的时间
 
+    private ActionBar mActionBar;
+    private ActionBar.Tab mHistoryTab;
+    private ActionBar.Tab mFutureTab;
+
     private ViewPager mDragLayer;// 可拖动图层
     private DragLayerAdapter mDragAdapter;// 可拖动图层的Adapter
+
     private int mIndex;// 当前显示的Fragment的索引
     public static final int FRAGMENT_HISTORY = 0;
     public static final int FRAGMENT_TOMORROW = 1;
@@ -55,11 +68,41 @@ public class MainActivity extends FragmentActivity {
         mDragLayer.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
+                Log.d(TAG, "onPageSelected().position=" + position + "mIndex=" + mIndex);
+                if (mIndex == position) {
+                    return;
+                }
+
                 mIndex = position;
+                switch (position) {
+                    case 0:
+                        mActionBar.selectTab(mHistoryTab);
+                        break;
+                    case 1:
+                        mActionBar.selectTab(mFutureTab);
+                        break;
+                }
             }
         });
         mIndex = FRAGMENT_HISTORY;
         mDragLayer.setCurrentItem(mIndex);
+
+        mActionBar = getActionBar();
+        mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);// 导航模式必须设为NAVIGATION_MODE_Tabs
+        // For each of the sections in the app, add a tab to the action bar.
+        mHistoryTab = mActionBar.newTab().setText(R.string.main_tab_history)
+                .setTabListener(this);
+        mFutureTab = mActionBar.newTab().setText(R.string.main_tab_future)
+                .setTabListener(this);
+        mActionBar.addTab(mHistoryTab);
+        mActionBar.addTab(mFutureTab);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_action_bar, menu);
+        return true;
     }
 
     @Override
@@ -105,6 +148,31 @@ public class MainActivity extends FragmentActivity {
                 break;
         }
         return false;
+    }
+
+    @Override
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+        int position = tab.getPosition();
+        Log.d(TAG, "onTabSelected().position=" + position + "mIndex=" + mIndex);
+        if (mIndex == position)
+            return;
+        mIndex = position;
+        switch (tab.getPosition()) {
+            case 0:
+                mDragLayer.setCurrentItem(0, true);
+                break;
+            case 1:
+                mDragLayer.setCurrentItem(1, true);
+                break;
+        }
+    }
+
+    @Override
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
+    }
+
+    @Override
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
     }
 
     /**

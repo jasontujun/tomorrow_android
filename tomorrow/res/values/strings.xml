@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">tomorrow</string>
+    <string name="app_name">Tomorrow</string>
+
+    <string name="action_item_publish">发布预测</string>
 
     <string name="dialog_waiting">请稍后...</string>
 
@@ -8,6 +10,9 @@
     <string name="http_bad_request">抱歉，网络请求参数异常~</string>
     <string name="http_fail">抱歉，网络请求失败</string>
     <string name="http_no_data">抱歉，没有更多数据了~</string>
+
+    <string name="main_tab_history">昨天</string>
+    <string name="main_tab_future">明天</string>
 
     <string name="login_request">抱歉，您还未登录，请登录~</string>
     <string name="login_username_null">账号不能为空哦</string>

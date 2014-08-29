@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,22 +25,24 @@ public class FutureFragment extends Fragment implements SwipeRefreshLayout.OnRef
 
     private static final int REFRESH_COMPLETE = 1;
 
+    SwipeRefreshLayout mSwipeLayout;
     private PredictionAdapter mAdapter;
+    private boolean mIsRefreshing;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_prediction, container, false);
-        SwipeRefreshLayout swipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_layout);
+        mSwipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_layout);
         ListView listView = (ListView) rootView.findViewById(R.id.content_list);
 
-        swipeLayout.setOnRefreshListener(this);
-        swipeLayout.setColorScheme(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
+        mSwipeLayout.setOnRefreshListener(this);
+        mSwipeLayout.setColorScheme(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
                 android.R.color.holo_orange_light, android.R.color.holo_red_light);
         FuturePredictionSource source = (FuturePredictionSource) DefaultDataRepo.getInstance().
                 getSource(SourceName.FUTURE_PREDICTION);
-        mAdapter = new PredictionAdapter(getActivity(), source, swipeLayout);
+        mAdapter = new PredictionAdapter(getActivity(), source, mSwipeLayout);
         listView.setAdapter(mAdapter);
         listView.setOnItemClickListener(mAdapter);
 
@@ -67,6 +70,12 @@ public class FutureFragment extends Fragment implements SwipeRefreshLayout.OnRef
 
     @Override
     public void onRefresh() {
+        if (mIsRefreshing) {
+            Log.d(MainActivity.TAG, "FutureFragment onRefresh()!正在刷新，无视此次回调!");
+            return;
+        }
+        Log.d(MainActivity.TAG, "FutureFragment onRefresh()!响应回调!");
+        mIsRefreshing = true;
 //        // 从服务器更新数据
 //        int[] date = SystemMgr.getInstance().getTomorrow();
 //        PredictionMgr.getInstance().getOtherPredictionList(getActivity(),
@@ -87,6 +96,7 @@ public class FutureFragment extends Fragment implements SwipeRefreshLayout.OnRef
                     Prediction prediction = new Prediction();
                     prediction.setPredictionId("" + System.currentTimeMillis());
                     source.add(prediction);
+                    mIsRefreshing = false;
                     break;
 
             }

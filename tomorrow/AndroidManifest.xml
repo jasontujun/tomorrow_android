@@ -4,7 +4,7 @@
           android:versionCode="1"
           android:versionName="1.0">
 
-    <uses-sdk android:minSdkVersion="8"/>
+    <uses-sdk android:minSdkVersion="11"/>
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
@@ -16,11 +16,11 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application android:label="@string/app_name"
-                 android:icon="@drawable/ic_launcher"
-                 android:theme="@android:style/Theme.NoTitleBar">
+                 android:icon="@drawable/icon">
 
         <activity android:name=".ui.MainActivity"
                   android:label="@string/app_name"
+                  android:theme="@style/Tomorrow.Theme"
                   android:windowSoftInputMode="adjustPan"
                   android:launchMode="singleTask"
                   android:screenOrientation="portrait"
@@ -32,6 +32,7 @@
         </activity>
         <activity android:name=".ui.PredictionActivity"
                   android:windowSoftInputMode="adjustPan"
+                  android:theme="@style/Tomorrow.Theme"
                   android:launchMode="singleTask"
                   android:screenOrientation="portrait"
                   android:configChanges="keyboardHidden|orientation">

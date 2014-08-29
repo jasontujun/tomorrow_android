@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_publish"
+          android:icon="@drawable/label_compose"
+          android:title="@string/action_item_publish"
+          android:showAsAction="ifRoom" />
+</menu>
