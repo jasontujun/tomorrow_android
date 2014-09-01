@@ -18,6 +18,9 @@ import com.tomorrow.android.mgr.SystemMgr;
 import com.tomorrow.android.ui.adpter.PredictionAdapter;
 import com.xengine.android.data.cache.DefaultDataRepo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 已发生预测的列表
  * Created by jasontujun on 14-7-5.
@@ -95,9 +98,14 @@ public class HistoryFragment extends Fragment implements SwipeRefreshLayout.OnRe
                     // TODO 添加测试数据
                     HistoryPredictionSource source = (HistoryPredictionSource) DefaultDataRepo.getInstance().
                             getSource(SourceName.HISTORY_PREDICTION);
-                    Prediction prediction = new Prediction();
-                    prediction.setPredictionId("" + System.currentTimeMillis());
-                    source.add(prediction);
+                    long time = System.currentTimeMillis();
+                    List<Prediction> newPredictions = new ArrayList<Prediction>();
+                    for (int i = 0; i< 10; i++) {
+                        Prediction prediction = new Prediction();
+                        prediction.setPredictionId("" + (time + i));
+                        source.add(prediction);
+                        newPredictions.add(prediction);
+                    }
                     mIsRefreshing = false;
                     break;
 

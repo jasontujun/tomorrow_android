@@ -1,11 +1,12 @@
 package com.tomorrow.android.ui;
 
+import android.app.ActionBar;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -22,9 +23,10 @@ import com.xengine.android.data.cache.DefaultDataRepo;
 import java.util.Calendar;
 
 /**
+ * 发布预测界面
  * Created by jasontujun on 14-7-6.
  */
-public class PublishFragment extends Fragment {
+public class PublishActivity extends Activity {
 
     private EditText mWhatView, mHowView, mWhereView, mReasonView;
     private TextView mYearView, mMonthView, mDayView, mCreditView;
@@ -32,19 +34,24 @@ public class PublishFragment extends Fragment {
     private int year, month, day;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        View rootView = inflater.inflate(R.layout.fragment_publish, container, false);
-        mWhatView = (EditText) rootView.findViewById(R.id.what_input);
-        mHowView = (EditText) rootView.findViewById(R.id.how_input);
-        mWhereView = (EditText) rootView.findViewById(R.id.where_input);
-        mReasonView = (EditText) rootView.findViewById(R.id.reason_input);
-        mYearView = (TextView) rootView.findViewById(R.id.year_view);
-        mMonthView = (TextView) rootView.findViewById(R.id.month_view);
-        mDayView = (TextView) rootView.findViewById(R.id.day_view);
-        mCreditView = (TextView) rootView.findViewById(R.id.credit_view);
-        mPublishBtn = (Button) rootView.findViewById(R.id.publish_btn);
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null)
+            actionBar.setDisplayHomeAsUpEnabled(true);
+
+        setContentView(R.layout.fragment_publish);
+
+        mWhatView = (EditText) findViewById(R.id.what_input);
+        mHowView = (EditText) findViewById(R.id.how_input);
+        mWhereView = (EditText) findViewById(R.id.where_input);
+        mReasonView = (EditText) findViewById(R.id.reason_input);
+        mYearView = (TextView) findViewById(R.id.year_view);
+        mMonthView = (TextView) findViewById(R.id.month_view);
+        mDayView = (TextView) findViewById(R.id.day_view);
+        mCreditView = (TextView) findViewById(R.id.credit_view);
+        mPublishBtn = (Button) findViewById(R.id.publish_btn);
 
         // 初始化日期
         initDate();
@@ -65,7 +72,7 @@ public class PublishFragment extends Fragment {
                         .getInstance().getSource(SourceName.GLOBAL_DATA);
                 User user = globalDataSource.getCurrentUser();
                 if (user == null) {
-                    Toast.makeText(getActivity(), R.string.login_request, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PublishActivity.this, R.string.login_request, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 final Prediction prediction = new Prediction();
@@ -82,27 +89,46 @@ public class PublishFragment extends Fragment {
 
                     @Override
                     protected Integer doInBackground(Void... voids) {
-                        if (getActivity() == null)
+                        if (PublishActivity.this.isFinishing())
                             return -1;
-                        return SessionApi.publishPrediction(getActivity(), prediction);
+                        return SessionApi.publishPrediction(PublishActivity.this, prediction);
                     }
 
                     @Override
                     protected void onPostExecute(Integer result) {
-                        if (getActivity() == null)
+                        if (PublishActivity.this.isFinishing())
                             return;
 
                         if (StatusCode.success(result)) {
-                           Toast.makeText(getActivity(), R.string.publish_success, Toast.LENGTH_SHORT).show();
+                           Toast.makeText(PublishActivity.this, R.string.publish_success, Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(getActivity(), StatusCode.toErrorString(result), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(PublishActivity.this, StatusCode.toErrorString(result), Toast.LENGTH_SHORT).show();
                         }
                     }
                 }.execute();
             }
         });
+    }
 
-        return rootView;
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // 在action bar点击app icon; 回到 home
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     /**

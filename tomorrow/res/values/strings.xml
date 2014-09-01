@@ -6,6 +6,9 @@
 
     <string name="dialog_waiting">请稍后...</string>
 
+    <string name="toast_api_request_error">抱歉，请求失败~</string>
+    <string name="toast_api_cancel">请求已中断</string>
+
     <string name="http_exception">抱歉，网络异常请重试~</string>
     <string name="http_bad_request">抱歉，网络请求参数异常~</string>
     <string name="http_fail">抱歉，网络请求失败</string>

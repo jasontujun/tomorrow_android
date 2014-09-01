@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- style的名字是Theme.AndroidDevelopers，父类为Theme.Holo，即黑底白字 -->
-    <style name="Tomorrow.Theme" parent="android:style/Theme.Holo">
+    <style name="TomorrowTheme" parent="android:style/Theme.Holo">
         <item name="android:selectableItemBackground">@drawable/action_bar_press_bg</item>
-        <item name="android:actionBarStyle">@style/Tomorrow.ActionBar</item>
+        <item name="android:actionBarStyle">@style/TomorrowActionBar</item>
     </style>
-    <style name="Tomorrow.ActionBar" parent="android:style/Widget.Holo.ActionBar">
+
+    <!-- Tomorrow自定义的ActionBar样式 -->
+    <style name="TomorrowActionBar" parent="android:style/Widget.Holo.ActionBar">
         <item name="android:titleTextStyle">@style/TomorrowTitleStyle</item>
         <item name="android:subtitleTextStyle">@style/TomorrowSubTitleStyle</item>
+        <item name="android:actionBarTabStyle">@style/TomorrowTabStyle</item>
+        <item name="android:actionBarTabTextStyle">@style/TomorrowTabTextStyle</item>
         <item name="android:background">@color/light_black</item>
     </style>
     <style name="TomorrowTitleStyle" parent="android:TextAppearance.Holo.Widget.ActionBar.Title">
@@ -15,6 +19,14 @@
     </style>
     <style name="TomorrowSubTitleStyle" parent="android:TextAppearance.Holo.Widget.ActionBar.Subtitle">
         <item name="android:textColor">@color/gray</item>
+    </style>
+    <style name="TomorrowTabStyle" parent="android:Widget.Holo.ActionBar.TabView">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+    <style name="TomorrowTabTextStyle" parent="android:Widget.Holo.ActionBar.TabText">
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="dialog" parent="@android:style/Theme.Dialog">

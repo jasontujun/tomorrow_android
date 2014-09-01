@@ -3,6 +3,7 @@ package com.tomorrow.android.ui;
 import android.app.*;
 import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Toast;
 import com.tomorrow.android.R;
 import com.tomorrow.android.mgr.SystemMgr;
@@ -148,6 +150,22 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 break;
         }
         return false;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // TODO 点击app图标的响应
+                return super.onOptionsItemSelected(item);
+            case R.id.menu_publish:
+                Intent intent = new Intent(this, PublishActivity.class);
+                startActivity(intent);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
