@@ -41,8 +41,7 @@ public class FutureFragment extends Fragment implements SwipeRefreshLayout.OnRef
         ListView listView = (ListView) rootView.findViewById(R.id.content_list);
 
         mSwipeLayout.setOnRefreshListener(this);
-        mSwipeLayout.setColorScheme(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
-                android.R.color.holo_orange_light, android.R.color.holo_red_light);
+        mSwipeLayout.setColorScheme(R.color.blue, R.color.green, R.color.yellow, R.color.pink);
         FuturePredictionSource source = (FuturePredictionSource) DefaultDataRepo.getInstance().
                 getSource(SourceName.FUTURE_PREDICTION);
         mAdapter = new PredictionAdapter(getActivity(), source, mSwipeLayout);

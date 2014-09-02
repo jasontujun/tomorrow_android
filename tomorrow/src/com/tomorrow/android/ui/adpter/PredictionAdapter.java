@@ -55,7 +55,7 @@ public class PredictionAdapter extends BaseAdapter
     private class ViewHolder {
         public TextView titleView;
         public TextView creditView;
-        public Button replyBtn;
+        public TextView replyBtn;
     }
 
     @Override
@@ -66,7 +66,7 @@ public class PredictionAdapter extends BaseAdapter
             holderHead = new ViewHolder();
             holderHead.titleView = (TextView) convertView.findViewById(R.id.title_view);
             holderHead.creditView = (TextView) convertView.findViewById(R.id.credit_view);
-            holderHead.replyBtn = (Button) convertView.findViewById(R.id.reply_btn);
+            holderHead.replyBtn = (TextView) convertView.findViewById(R.id.reply_btn);
             convertView.setTag(holderHead);
         } else {
             holderHead = (ViewHolder) convertView.getTag();
@@ -140,7 +140,6 @@ public class PredictionAdapter extends BaseAdapter
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        Toast.makeText(mContext, "点击了Item！", Toast.LENGTH_SHORT).show();
         Prediction prediction = (Prediction) getItem(i);
         if (prediction == null)
             return;

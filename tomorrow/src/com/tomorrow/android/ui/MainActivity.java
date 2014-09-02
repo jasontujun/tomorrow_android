@@ -76,13 +76,15 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 }
 
                 mIndex = position;
-                switch (position) {
-                    case 0:
-                        mActionBar.selectTab(mHistoryTab);
-                        break;
-                    case 1:
-                        mActionBar.selectTab(mFutureTab);
-                        break;
+                if (mActionBar != null) {
+                    switch (position) {
+                        case FRAGMENT_HISTORY:
+                            mActionBar.selectTab(mHistoryTab);
+                            break;
+                        case FRAGMENT_TOMORROW:
+                            mActionBar.selectTab(mFutureTab);
+                            break;
+                    }
                 }
             }
         });
@@ -90,14 +92,16 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         mDragLayer.setCurrentItem(mIndex);
 
         mActionBar = getActionBar();
-        mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);// 导航模式必须设为NAVIGATION_MODE_Tabs
-        // For each of the sections in the app, add a tab to the action bar.
-        mHistoryTab = mActionBar.newTab().setText(R.string.main_tab_history)
-                .setTabListener(this);
-        mFutureTab = mActionBar.newTab().setText(R.string.main_tab_future)
-                .setTabListener(this);
-        mActionBar.addTab(mHistoryTab);
-        mActionBar.addTab(mFutureTab);
+        if (mActionBar != null) {
+            mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);// 导航模式必须设为NAVIGATION_MODE_Tabs
+            // For each of the sections in the app, add a tab to the action bar.
+            mHistoryTab = mActionBar.newTab().setText(R.string.main_tab_history)
+                    .setTabListener(this);
+            mFutureTab = mActionBar.newTab().setText(R.string.main_tab_future)
+                    .setTabListener(this);
+            mActionBar.addTab(mHistoryTab);
+            mActionBar.addTab(mFutureTab);
+        }
     }
 
     @Override
@@ -176,11 +180,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             return;
         mIndex = position;
         switch (tab.getPosition()) {
-            case 0:
-                mDragLayer.setCurrentItem(0, true);
+            case FRAGMENT_HISTORY:
+                mDragLayer.setCurrentItem(FRAGMENT_HISTORY, true);
                 break;
-            case 1:
-                mDragLayer.setCurrentItem(1, true);
+            case FRAGMENT_TOMORROW:
+                mDragLayer.setCurrentItem(FRAGMENT_TOMORROW, true);
                 break;
         }
     }

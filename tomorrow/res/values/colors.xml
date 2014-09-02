@@ -9,8 +9,9 @@
     <color name="dark_black">#ff242626</color>
     <color name="black">#000000</color>
 
-    <color name="pink">#ffdba7a8</color>
-    <color name="yellow">#ffdadb55</color>
+    <color name="pink">#ffe8b4b5</color>
+    <color name="yellow">#ffe7df4d</color>
     <color name="green">#ffaccd77</color>
+    <color name="blue">#ff42abcc</color>
 
 </resources>
