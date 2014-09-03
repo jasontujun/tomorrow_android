@@ -13,5 +13,6 @@
     <color name="yellow">#ffe7df4d</color>
     <color name="green">#ffaccd77</color>
     <color name="blue">#ff42abcc</color>
+    <color name="dark_blue">#ff32839c</color>
 
 </resources>

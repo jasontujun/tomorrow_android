@@ -53,7 +53,7 @@
                 android:textColor="@color/gray"
                 android:drawableLeft="@drawable/btn_reply"
                 android:drawablePadding="6dp"
-                android:background="@drawable/bg_action_bar_item"/>
+                android:background="@drawable/bg_transparent_gray"/>
 
     </RelativeLayout>
 </LinearLayout>

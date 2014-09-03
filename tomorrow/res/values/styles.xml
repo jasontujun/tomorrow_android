@@ -2,7 +2,7 @@
 <resources>
     <!-- Tomorrow自定义的Theme样式(含ActionBar和Tab样式) -->
     <style name="TomorrowTheme" parent="android:style/Theme.Holo">
-        <item name="android:selectableItemBackground">@drawable/bg_action_bar_item</item>
+        <item name="android:selectableItemBackground">@drawable/bg_transparent_gray</item>
         <item name="android:actionBarStyle">@style/TomorrowActionBar</item>
         <item name="android:actionBarTabStyle">@style/TomorrowTabStyle</item>
         <item name="android:actionBarTabTextStyle">@style/TomorrowTabTextStyle</item>
