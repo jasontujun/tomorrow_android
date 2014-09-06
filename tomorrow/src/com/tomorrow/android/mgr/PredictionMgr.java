@@ -9,12 +9,12 @@ import com.tomorrow.android.api.SessionApi;
 import com.tomorrow.android.api.StatusCode;
 import com.tomorrow.android.data.cache.GlobalDataSource;
 import com.tomorrow.android.data.cache.MyPredictionSource;
-import com.tomorrow.android.data.cache.OtherPredictionSource;
 import com.tomorrow.android.data.cache.SourceName;
 import com.tomorrow.android.data.model.Prediction;
 import com.tomorrow.android.data.model.User;
 import com.tomorrow.android.utils.DialogUtil;
 import com.xengine.android.data.cache.DefaultDataRepo;
+import com.xengine.android.data.cache.XAdapterDataSource;
 import com.xengine.android.utils.XLog;
 
 import java.util.ArrayList;
@@ -49,6 +49,7 @@ public class PredictionMgr {
 
 
     public boolean getOtherPredictionList(final Context context,
+                                          final XAdapterDataSource<Prediction> source,
                                           final int year, final int month,
                                           final int day,
                                           final int offset, final int size,
@@ -87,9 +88,7 @@ public class PredictionMgr {
             protected void onPostExecute(Integer result) {
                 if (StatusCode.success(result)) {
                     Toast.makeText(context, R.string.get_prediction_list_success, Toast.LENGTH_SHORT).show();
-                    OtherPredictionSource otherSource = (OtherPredictionSource) DefaultDataRepo
-                            .getInstance().getSource(SourceName.OTHER_PREDICTION);
-                    otherSource.addAll(predictions);
+                    source.addAll(predictions);
                     XLog.d("API", "获取别人的prediction数量为:" + predictions.size());
                 } else {
                     Toast.makeText(context, StatusCode.toErrorString(result), Toast.LENGTH_SHORT).show();

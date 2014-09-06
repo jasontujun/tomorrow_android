@@ -44,7 +44,6 @@ public class SystemMgr {
         XDataRepository repo = DefaultDataRepo.getInstance();
         repo.registerDataSource(new GlobalDataSource(context));
         repo.registerDataSource(new MyPredictionSource());
-        repo.registerDataSource(new OtherPredictionSource());
         repo.registerDataSource(new HistoryPredictionSource());
         repo.registerDataSource(new FuturePredictionSource());
 

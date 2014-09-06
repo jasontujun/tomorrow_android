@@ -13,6 +13,7 @@
     <string name="http_bad_request">抱歉，网络请求参数异常~</string>
     <string name="http_fail">抱歉，网络请求失败</string>
     <string name="http_no_data">抱歉，没有更多数据了~</string>
+    <string name="http_refresh_success">刷新成功！</string>
 
     <string name="main_tab_history">昨天</string>
     <string name="main_tab_future">明天</string>

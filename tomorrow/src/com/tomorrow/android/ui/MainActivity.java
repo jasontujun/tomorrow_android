@@ -111,25 +111,25 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         return true;
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        if (mNetworkReceiver == null)
-            mNetworkReceiver = new NetworkReceiver();
-
-        // 注册对网络状况的监听
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-        registerReceiver(mNetworkReceiver, filter);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        // 取消对网络状况的监听
-        unregisterReceiver(mNetworkReceiver);
-    }
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//
+//        if (mNetworkReceiver == null)
+//            mNetworkReceiver = new NetworkReceiver();
+//
+//        // 注册对网络状况的监听
+//        IntentFilter filter = new IntentFilter();
+//        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+//        registerReceiver(mNetworkReceiver, filter);
+//    }
+//
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//        // 取消对网络状况的监听
+//        unregisterReceiver(mNetworkReceiver);
+//    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent e) {
