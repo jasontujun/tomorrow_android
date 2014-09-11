@@ -2,6 +2,7 @@ package com.tomorrow.android.mgr;
 
 import android.content.Context;
 import com.tomorrow.android.data.cache.*;
+import com.tomorrow.android.test.FakeData;
 import com.xengine.android.data.cache.DefaultDataRepo;
 import com.xengine.android.data.cache.XDataRepository;
 import com.xengine.android.session.http.XHttp;
@@ -46,12 +47,35 @@ public class SystemMgr {
         repo.registerDataSource(new OtherPredictionSource());
         repo.registerDataSource(new HistoryPredictionSource());
         repo.registerDataSource(new FuturePredictionSource());
+
+        // TODO 假数据
+        FuturePredictionSource futureSource = (FuturePredictionSource) repo.
+                getSource(SourceName.FUTURE_PREDICTION);
+        int[] tomorrow = getTomorrow();
+        futureSource.addAll(FakeData.createPredictions(tomorrow[0], tomorrow[1], tomorrow[2], 20));
+        HistoryPredictionSource historySource = (HistoryPredictionSource) repo.
+                getSource(SourceName.HISTORY_PREDICTION);
+        int[] yesterday = getYesterday();
+        historySource.addAll(FakeData.createPredictions(yesterday[0],yesterday[1],yesterday[2], 20));
     }
 
     public XHttp getHttpClient() {
         return mHttp;
     }
 
+
+    /**
+     * 获取昨天的年月日
+     */
+    public int[] getYesterday() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, -1);
+        int[] result = new int[3];
+        result[0] = calendar.get(Calendar.YEAR);
+        result[1] = calendar.get(Calendar.MONTH) + 1;
+        result[2] = calendar.get(Calendar.DATE);
+        return result;
+    }
 
     /**
      * 获取明天的年月日

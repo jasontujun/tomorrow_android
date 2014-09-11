@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
 import com.tomorrow.android.R;
+import com.tomorrow.android.data.cache.FuturePredictionSource;
 import com.tomorrow.android.data.cache.OtherPredictionSource;
 import com.tomorrow.android.data.cache.SourceName;
 import com.tomorrow.android.data.model.Prediction;
@@ -54,11 +55,10 @@ public class PredictionActivity extends Activity implements SwipeRefreshLayout.O
         mListView = (ListView) findViewById(R.id.content_list);
 
         mSwipeLayout.setOnRefreshListener(this);
-        mSwipeLayout.setColorScheme(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
-                android.R.color.holo_orange_light, android.R.color.holo_red_light);
+        mSwipeLayout.setColorScheme(R.color.blue, R.color.green, R.color.yellow, R.color.pink);
 
-        OtherPredictionSource source = (OtherPredictionSource) DefaultDataRepo
-                .getInstance().getSource(SourceName.OTHER_PREDICTION);
+        FuturePredictionSource source = (FuturePredictionSource) DefaultDataRepo
+                .getInstance().getSource(SourceName.FUTURE_PREDICTION);
         mPrediction = source.getById(mPredictionId);
         if (mPrediction == null)
             return;
@@ -109,9 +109,6 @@ public class PredictionActivity extends Activity implements SwipeRefreshLayout.O
                         public void onFinish(boolean success, Prediction prediction) {
                             if (success) {
                                 mPrediction = prediction;
-                                OtherPredictionSource source = (OtherPredictionSource) DefaultDataRepo
-                                        .getInstance().getSource(SourceName.OTHER_PREDICTION);
-                                source.add(mPrediction);
                                 mAdapter = new PredictionDetailAdapter(PredictionActivity.this, mPrediction);
                                 mListView.setAdapter(mAdapter);
                             }

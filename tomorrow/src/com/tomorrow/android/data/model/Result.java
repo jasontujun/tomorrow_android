@@ -8,7 +8,7 @@ public class Result {
     private String predictionId;
     private String senderId;
     private String senderName;
-    private double accuracy;
+    private double accuracy;// 0~1
     private long createdTime;
 
     public String getResultId() {

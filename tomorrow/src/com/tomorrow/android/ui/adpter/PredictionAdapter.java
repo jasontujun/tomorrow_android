@@ -32,9 +32,9 @@ public class PredictionAdapter extends BaseAdapter
     public PredictionAdapter(Context context, XAdapterDataSource<Prediction> source,
                              SwipeRefreshLayout swipeLayout) {
         mContext = context;
-        mItems = new ArrayList<Prediction>();
         mSource = source;
         mSwipeLayout = swipeLayout;
+        mItems = source.copyAll();
     }
 
     @Override

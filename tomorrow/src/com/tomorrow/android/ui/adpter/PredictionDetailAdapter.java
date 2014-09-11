@@ -19,8 +19,8 @@ import java.util.List;
  */
 public class PredictionDetailAdapter extends BaseAdapter {
 
-    private static final int TYPE_DETAIL = 1;
-    private static final int TYPE_REPLY = 2;
+    private static final int TYPE_DETAIL = 0;
+    private static final int TYPE_REPLY = 1;
 
     private Context mContext;
     private Prediction mPrediction;
@@ -107,7 +107,7 @@ public class PredictionDetailAdapter extends BaseAdapter {
                     convertView = View.inflate(mContext, R.layout.item_prediciton_detail, null);
                     holderHead = new DetailViewHolder();
                     holderHead.authorView = (TextView) convertView.findViewById(R.id.author_view);
-                    holderHead.timeView = (TextView) convertView.findViewById(R.id.title_view);
+                    holderHead.timeView = (TextView) convertView.findViewById(R.id.time_view);
                     holderHead.titleView = (TextView) convertView.findViewById(R.id.title_view);
                     holderHead.reasonView = (TextView) convertView.findViewById(R.id.reason_view);
                     holderHead.creditView = (TextView) convertView.findViewById(R.id.credit_view);
@@ -141,10 +141,10 @@ public class PredictionDetailAdapter extends BaseAdapter {
             case TYPE_REPLY: {
                 ReplyViewHolder holderHead = null;
                 if (convertView == null) {
-                    convertView = View.inflate(mContext, R.layout.item_prediciton_detail, null);
+                    convertView = View.inflate(mContext, R.layout.item_reply, null);
                     holderHead = new ReplyViewHolder();
                     holderHead.senderView = (TextView) convertView.findViewById(R.id.sender_view);
-                    holderHead.timeView = (TextView) convertView.findViewById(R.id.title_view);
+                    holderHead.timeView = (TextView) convertView.findViewById(R.id.time_view);
                     holderHead.titleView = (TextView) convertView.findViewById(R.id.title_view);
                     holderHead.possibilityView = (TextView) convertView.findViewById(R.id.possibility_view);
                     holderHead.replyBtn = (Button) convertView.findViewById(R.id.reply_btn);

@@ -17,13 +17,13 @@ public class Prediction {
     private String reason;
     private String authorId;
     private String authorName;
-    private double credit;
+    private double credit;// 可信度
     private long createdTime;
     private double publishLatitude;
     private double publishLongitude;
-    private double averageCount;
-    private int replyCount;
-    private int resultCount;
+    private double averageCount;// ?
+    private int replyCount;// 恢复数
+    private int resultCount;// 验证数
     private int scanCount;
 
     private List<Reply> replyList;
